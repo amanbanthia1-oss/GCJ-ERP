@@ -116,7 +116,7 @@ function shareInvoice(){
 function copyInvoiceText(){
   if(!currentInvoiceOrder) return;
   const text = buildInvoiceText(currentInvoiceOrder);
-  navigator.clipboard.writeText(text).then(()=>alert('Copied!')).catch(()=>alert('Copy failed'));
+  navigator.clipboard.writeText(text).then(()=>toast('Copied!')).catch(()=>toast('Copy failed','error'));
 }
 
 function printInvoice(){

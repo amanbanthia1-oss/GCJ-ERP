@@ -7,26 +7,26 @@ function renderPos(){
 
 function updatePosTypeHint(){
   const type = document.getElementById('posType').value;
-  const hint = document.getElementById('posTypeHint');
+  const hint = document.getElementById('posStockHint');
   const map = {
-    'SALE': 'Normal sales transaction',
-    'SAMPLE': 'Complimentary sample given',
-    'SALE_RETURN': 'Customer returning sold goods',
-    'SAMPLE_RETURN': 'Customer returning sample'
+    'SALE': 'This will decrease stock',
+    'SAMPLE': 'This will decrease stock',
+    'SALE_RETURN': 'This will increase stock',
+    'SAMPLE_RETURN': 'This will increase stock'
   };
   hint.textContent = map[type]||'';
 }
 
 function renderPosProductList(){
-  const q = (document.getElementById('posCatalogSearch').value||'').toLowerCase();
+  const q = (document.getElementById('posProductSearch').value||'').toLowerCase();
   let list = data.products.filter(p=>{
     if(q && !(p.code+'').toLowerCase().includes(q) && !(p.name||'').toLowerCase().includes(q)) return false;
     return true;
   });
 
-  const posDiv = document.getElementById('posCatalogList');
+  const posDiv = document.getElementById('posProductList');
   if(!list.length){
-    posDiv.innerHTML = '<div class="empty" style="padding:20px"><p>No products</p></div>';
+    posDiv.innerHTML = '<div class="empty" style="padding:20px"><p>No products found</p><p style="font-size:12px;color:var(--stone-400)">Tap products above to add</p></div>';
     return;
   }
   posDiv.innerHTML = list.map(p=>`
@@ -66,9 +66,11 @@ function adjustPosQtyType(i,val){
 }
 
 function renderPosLines(){
-  const container = document.getElementById('posLinesContainer');
+  const container = document.getElementById('posLines');
+  const totalDiv = document.getElementById('posTotal');
   if(!posSelectedLines.length){
-    container.innerHTML = '<div class="empty" style="padding:40px 20px"><p>Add products from catalog</p></div>';
+    container.innerHTML = '<div class="empty" style="padding:20px 0"><p>Tap products above to add</p></div>';
+    totalDiv.innerHTML = '';
     return;
   }
 
@@ -114,15 +116,8 @@ function renderPosLines(){
     `;
   }).join('');
 
-  container.innerHTML = lines + `
-    <div class="card" style="background:var(--amber-light);border:2px solid var(--amber);margin-top:20px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:16px;font-weight:700;color:var(--amber-dark)">Total</div>
-        <div style="font-size:24px;font-weight:700;color:var(--amber-dark)">₹${total.toLocaleString('en-IN')}</div>
-      </div>
-      <button class="btn btn-primary btn-block" onclick="completePos()" style="margin-top:12px">Complete Transaction</button>
-    </div>
-  `;
+  container.innerHTML = lines;
+  totalDiv.innerHTML = `<div style="font-size:18px;font-weight:700;color:var(--amber-dark)">Total: ₹${total.toLocaleString('en-IN')}</div>`;
 }
 
 function adjustPosLine(i,delta){
@@ -148,7 +143,7 @@ function setPosQty(i,val){
 
 function completePos(){
   if(!posSelectedLines.length){
-    alert('Add at least one product');
+    toast('Add at least one product','warn');
     return;
   }
 

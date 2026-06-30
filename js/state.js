@@ -42,8 +42,17 @@ function saveData(d){
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
   } catch(e) {
-    alert('Error saving data: ' + e.message + '. Try reducing photo sizes or clearing local storage.');
+    toast('Error saving: ' + e.message, 'error');
   }
+}
+
+function toast(msg, type='success'){
+  const t = document.createElement('div');
+  const bg = type==='error' ? 'var(--amber-dark)' : type==='warn' ? '#b45309' : '#166534';
+  t.style.cssText = `position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:99999;background:${bg};color:#fff;padding:10px 20px;border-radius:999px;font-size:13px;font-weight:500;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.18);pointer-events:none;transition:opacity .3s`;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300)},2200);
 }
 
 // Initialize data on load

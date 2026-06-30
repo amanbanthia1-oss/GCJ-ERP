@@ -1,11 +1,11 @@
 // Settings Page
 
 function loadSettings(){
-  const nameEl = document.getElementById('settingsCompanyName');
-  const gstinEl = document.getElementById('settingsGstin');
-  const addressEl = document.getElementById('settingsAddress');
-  const phoneEl = document.getElementById('settingsPhone');
-  const emailEl = document.getElementById('settingsEmail');
+  const nameEl = document.getElementById('setCompany');
+  const gstinEl = document.getElementById('setGstin');
+  const addressEl = document.getElementById('setAddress');
+  const phoneEl = document.getElementById('setPhone');
+  const emailEl = document.getElementById('setEmail');
 
   if(nameEl) nameEl.value = data.settings.companyName||'';
   if(gstinEl) gstinEl.value = data.settings.gstin||'';
@@ -15,14 +15,14 @@ function loadSettings(){
 }
 
 function saveSettings(){
-  data.settings.companyName = document.getElementById('settingsCompanyName').value.trim();
-  data.settings.gstin = document.getElementById('settingsGstin').value.trim();
-  data.settings.address = document.getElementById('settingsAddress').value.trim();
-  data.settings.phone = document.getElementById('settingsPhone').value.trim();
-  data.settings.email = document.getElementById('settingsEmail').value.trim();
+  data.settings.companyName = document.getElementById('setCompany').value.trim();
+  data.settings.gstin = document.getElementById('setGstin').value.trim();
+  data.settings.address = document.getElementById('setAddress').value.trim();
+  data.settings.phone = document.getElementById('setPhone').value.trim();
+  data.settings.email = document.getElementById('setEmail').value.trim();
   saveData(data);
   fsSet('settings', 'app', data.settings);
-  alert('Settings saved!');
+  toast('Settings saved!');
 }
 
 function resetData(){
@@ -34,7 +34,7 @@ function resetData(){
   const batch = db.batch();
   batch.set(db.collection('settings').doc('app'), data.settings);
   batch.commit().then(() => {
-    alert('Data reset!');
+    toast('Data reset!');
     renderAll();
   });
 }
