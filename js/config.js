@@ -9,9 +9,3 @@ const firebaseConfig = {
   measurementId: "G-LG7J8FYBBZ"
 };
 
-// Wait for Firebase to load
-if(typeof firebase !== 'undefined') {
-  firebase.initializeApp(firebaseConfig);
-} else {
-  console.log('Firebase loading...');
-}

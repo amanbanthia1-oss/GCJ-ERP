@@ -19,11 +19,15 @@ function initializeApp() {
 
   try {
     firebase.initializeApp(firebaseConfig);
+  } catch(e) {
+    // already initialized — that's fine
+  }
+  try {
     db = firebase.firestore();
     db.settings({merge:true});
     console.log('Firebase initialized');
   } catch(e) {
-    console.log('Firebase already initialized:', e.message);
+    console.log('Firestore init failed:', e.message);
   }
 }
 

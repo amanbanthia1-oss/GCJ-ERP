@@ -148,6 +148,16 @@
         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         <input placeholder="Search invoices..." oninput="renderHistory()" id="historySearch">
       </div>
+      <div class="sort-bar">
+        <select onchange="renderHistory()" id="historySortBy">
+          <option value="date-desc">Date ↓</option>
+          <option value="date-asc">Date ↑</option>
+          <option value="num-desc">Invoice # ↓</option>
+          <option value="num-asc">Invoice # ↑</option>
+          <option value="amount-desc">Amount ↓</option>
+          <option value="amount-asc">Amount ↑</option>
+        </select>
+      </div>
       <div class="chips" id="historyFilter">
         <span class="chip active" data-filter="" onclick="setHistoryFilter(this,'')">All</span>
         <span class="chip" data-filter="SALE" onclick="setHistoryFilter(this,'SALE')">Sale</span>
